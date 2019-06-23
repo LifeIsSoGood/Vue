@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<script type="text/javascript" src="./lib/vue.js">
+			
+		</script>
+	</head>
+	<body>
+		<div id="app">
+			<!-- 父组件可以在引用子组件的时候通过属性绑定(v-bind)的形式把数据传给子组件，可以通过事件绑定（v-on）的形式把方法传递给子组件 -->
+			<com1 :parentmsg='msg'></com1>
+		</div>
+		
+		<script type="text/javascript">
+			let vm = new Vue({
+				el:'#app',
+				data:{
+					msg:'fuzujian'
+				},
+				methods:{
+					// 通过$emit调用父组件中的方法
+					// this.$emit('function')
+				},
+				components:{
+					// 子组件默认访问不到父组件中的data和methods
+					com1:{
+						template:'<h1>zi  {{parentmsg}}</h1>',
+						// 组件中所哟props中的数据豆薯父组件传递给子组件的
+						// 父组件传递过来的parentmsg属性必需先在props数组中定义一下才能使用
+						// props中的数据都是只读的,不要重新赋值
+						props:['parentmsg'],
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
