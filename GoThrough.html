@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./lib/vue.js"></script>
+		<script src="./lib/vue-router.js"></script>
+	</head>
+	<body>
+		
+		<div id="app">
+			<!-- bind属性大小写不敏感，如果是驼峰命名,需要用横线连接 -->
+			<com1 v-bind:parent-msg="msg" v-on:func="getMsgFromSon"></com1>
+		</div>
+		
+		<template id="tmp1">
+			<div>
+				<h1>这是子元素1 ---{{parentMsg}}</h1>
+				<input type="button" value="想父组件传递消息" @click="sendMsg">
+			</div>
+		</template>
+		
+		<script>
+			let com1={
+				template:'#tmp1',
+				data(){
+					return{
+						msg:'子组件数据'
+					}
+				},
+				props:['parentMsg'],
+				methods:{
+					sendMsg(){
+						this.$emit('func', this.msg)
+					}
+				}
+			}
+			
+			
+			let vm= new Vue({
+				el:'#app',
+				data:{
+					msg:'父组件数据',
+					msgFromSon:''
+				},
+				methods:{
+					getMsgFromSon(data){
+						this.msgFromSon = data;
+						console.log(this.msgFromSon);
+					}
+				},
+				components:{
+					com1
+				}
+			})
+		</script>
+	</body>
+</html>
